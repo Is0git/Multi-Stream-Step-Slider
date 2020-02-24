@@ -2,4 +2,10 @@
 <resources>
     <color name="colorOnSurface">#E7E7E7</color>
     <color name="colorSurface">#ffffff</color>
+    <color name="colorPrimary">#5e4eba</color>
+    <color name="colorSecondary">#fe0000</color>
+    <color name="colorAccent">#172450</color>
+    <color name="colorBackground">#FFFFFF</color>
+    <color name="colorOnPrimaryVariant">#4523F7</color>
+    <color name="colorOnSecondaryVariant">#B43BFF</color>
 </resources>
