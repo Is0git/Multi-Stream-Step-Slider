@@ -53,6 +53,9 @@ class SlideLayout : ConstraintLayout {
             textAlignment = View.TEXT_ALIGNMENT_TEXT_END
             this.textSize = 25f
             id = R.id.next_button
+            setOnClickListener { viewPager.apply {
+                setCurrentItem(currentItem + 1, true)
+            } }
         }
 
         viewPager = ViewPager2(context).apply {
