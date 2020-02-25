@@ -16,10 +16,6 @@ class SliderIndicator : View {
 
     var indicatorsSize = 5
 
-    var maxCircleHeight = 50f
-
-    var maxCircleWidth = 50f
-
     var circleRadius = 25f
 
     val circleDiameter = circleRadius * 2
@@ -68,7 +64,7 @@ class SliderIndicator : View {
         if(indicatorsSize == 0) return
         val midY = height / 2f
         Log.d("TEST", "CANVAS: ${canvas?.width}, NORMAL: $width MEASURED: $measuredWidth")
-
+        
         canvas?.drawCircle(circleRadius + paddingStart, midY, circleRadius, defaultCirclePaint)
 
         val midIndicatorPadding = circleRadius + paddingStart

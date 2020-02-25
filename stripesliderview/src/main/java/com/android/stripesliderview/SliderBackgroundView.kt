@@ -34,7 +34,6 @@ class SliderBackgroundView : View {
 
         underBgPaint = Paint().apply {  color = Color.parseColor("#E7E7E7")
         }
-        val porterDuff: PorterDuff.Mode = PorterDuff.Mode.MULTIPLY
         val bgBitmap = BitmapFactory.decodeResource(context?.resources, R.drawable.stripe_slider_bg)
         bgShapePaint = Paint().apply {
             color = Color.BLACK
@@ -54,7 +53,7 @@ class SliderBackgroundView : View {
             val width = this@SliderBackgroundView.width.toFloat()
             val height = this@SliderBackgroundView.height.toFloat()
             lineTo(0f, height*0.87f)
-            cubicTo(width * 0.20f, height * 1.03f, width * 0.50f, height * 1.04f, width, height  * 0.85f)
+            cubicTo(width * 0.20f, height * 1.0f, width * 0.50f, height * 1.04f, width, height  * 0.85f)
             lineTo(width, 0f)
             close()
         }

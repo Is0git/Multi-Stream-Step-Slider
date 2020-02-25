@@ -4,4 +4,6 @@
     <item name="sign_up_text" type="id"/>
     <item name="background_id" type="id"/>
     <item name="next_button" type="id"/>
+    <item name="indicators" type="id"/>
+    <item name="signUpButton" type="id"/>
 </resources>
