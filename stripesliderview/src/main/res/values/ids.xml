@@ -6,4 +6,5 @@
     <item name="next_button" type="id"/>
     <item name="indicators" type="id"/>
     <item name="signUpButton" type="id"/>
+    <item name="viewPagerView" type="id"/>
 </resources>
