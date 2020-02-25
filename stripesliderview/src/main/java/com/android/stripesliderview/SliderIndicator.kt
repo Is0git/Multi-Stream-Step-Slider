@@ -2,9 +2,7 @@ package com.android.stripesliderview
 
 import android.content.Context
 import android.content.res.Resources
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
+import android.graphics.*
 import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.util.Log
@@ -22,8 +20,13 @@ class SliderIndicator : View {
 
     val indicatorsMargin = 50f
 
-    val selectedCircleRadius = 75f
+    val selectedCircleRadius = 30f
 
+    val selectedPosition = 2
+
+    val selectedCircleDiameter = selectedCircleRadius * 2
+
+    lateinit var selectedIndicatorPaint: Paint
 
     lateinit var defaultCirclePaint : Paint
 
@@ -44,14 +47,18 @@ class SliderIndicator : View {
 
     fun init(context: Context?, attrs: AttributeSet? = null) {
         defaultCirclePaint = Paint().apply {
-            color = Color.BLACK
+            shader = LinearGradient(0f, 0f, 0f, selectedCircleDiameter, resources.getColor(R.color.colorSurface), resources.getColor(R.color.colorOnSurface), Shader.TileMode.CLAMP)
+        }
+
+        selectedIndicatorPaint = Paint().apply {
+            shader = LinearGradient(0f, 0f, 0f, selectedCircleDiameter, resources.getColor(R.color.colorPrimary), resources.getColor(R.color.colorOnSecondaryVariant), Shader.TileMode.CLAMP)
         }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
 
         val desiredWidth = (circleDiameter * indicatorsSize)+ paddingStart + paddingEnd + (indicatorsMargin * indicatorsSize - 1)
-        val desiredHeight = selectedCircleRadius + paddingTop + paddingBottom
+        val desiredHeight = (selectedCircleRadius * 2) + paddingTop + paddingBottom
         val width = resolveSize(desiredWidth.toInt(), widthMeasureSpec)
         val height = resolveSize(desiredHeight.toInt(), heightMeasureSpec)
         Log.d("TEST", "CANVAS: ${desiredWidth}, NORMAL: $width PADDING START: $paddingStart PADDAINGEND: $paddingEnd")
@@ -64,14 +71,17 @@ class SliderIndicator : View {
         if(indicatorsSize == 0) return
         val midY = height / 2f
         Log.d("TEST", "CANVAS: ${canvas?.width}, NORMAL: $width MEASURED: $measuredWidth")
-        
+
         canvas?.drawCircle(circleRadius + paddingStart, midY, circleRadius, defaultCirclePaint)
 
         val midIndicatorPadding = circleRadius + paddingStart
         for(a in 1 until indicatorsSize) {
-           canvas?.drawCircle((a * circleDiameter) + midIndicatorPadding + (indicatorsMargin *a), midY, circleRadius, defaultCirclePaint)
+            if (a == selectedPosition) {
+                canvas?.drawCircle((a * circleDiameter) + midIndicatorPadding + (indicatorsMargin *a), midY, selectedCircleRadius, selectedIndicatorPaint)
+            } else {
+                canvas?.drawCircle((a * circleDiameter) + midIndicatorPadding + (indicatorsMargin *a), midY, circleRadius, defaultCirclePaint)
+            }
         }
-
     }
 }
 

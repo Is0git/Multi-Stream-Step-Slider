@@ -37,7 +37,7 @@ class SlideLayout : ConstraintLayout {
     }
 
 
-    fun init(context: Context?) {
+    private fun init(context: Context?) {
 
 
         sliderBackgroundView = SliderBackgroundView(context).apply {
@@ -65,7 +65,7 @@ class SlideLayout : ConstraintLayout {
             text = "SIGN IN"
             typeface = ResourcesCompat.getFont(context, R.font.myriad_pro)
             this.backgroundTintList =
-                ColorStateList.valueOf(resources.getColor(R.color.colorPrimary))
+                ColorStateList.valueOf(ResourcesCompat.getColor(resources,R.color.colorPrimary, null))
             this.cornerRadius = 80
             this.textSize = 25f
             layoutParams =
@@ -87,7 +87,9 @@ class SlideLayout : ConstraintLayout {
             layoutParams = LayoutParams(LayoutParams.MATCH_CONSTRAINT, LayoutParams.WRAP_CONTENT)
         }
 
-
+        this.setConstraintSet(ConstraintSet().apply {
+            clone(context, R.layout.place_holder)
+        })
 
 
         addView(sliderBackgroundView)
@@ -97,10 +99,6 @@ class SlideLayout : ConstraintLayout {
         addView(signUpText)
 
         addView(signUpButton)
-
-        this.setConstraintSet(ConstraintSet().apply {
-            clone(context, R.layout.test)
-        })
 
         addView(indicator)
 
