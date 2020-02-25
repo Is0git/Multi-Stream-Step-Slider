@@ -42,12 +42,6 @@ class SliderIndicator : View {
         defStyleAttr
     ) {init(context)}
 
-    constructor(
-        context: Context?,
-        attrs: AttributeSet?,
-        defStyleAttr: Int,
-        defStyleRes: Int
-    ) : super(context, attrs, defStyleAttr, defStyleRes) {init(context)}
 
     fun init(context: Context?, attrs: AttributeSet? = null) {
         defaultCirclePaint = Paint().apply {
@@ -80,7 +74,7 @@ class SliderIndicator : View {
         val midY = height / 2f
         Log.d("TEST", "CANVAS: ${canvas?.width}, NORMAL: $width MEASURED: $measuredWidth")
 
-        canvas?.drawCircle(circleRadius + paddingStart, midY, circleRadius, defaultCirclePaint)
+        canvas?.drawCircle(circleRadius + paddingStart, midY, circleRadius, if (selectedPosition == 0) selectedIndicatorPaint else defaultCirclePaint)
 
         val midIndicatorPadding = circleRadius + paddingStart
         for(a in 1 until indicatorsSize) {
