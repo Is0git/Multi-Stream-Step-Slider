@@ -56,8 +56,26 @@ class SlideLayout : ConstraintLayout {
 
         viewPager = ViewPager2(context).apply {
             id = R.id.viewPagerView
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageScrollStateChanged(state: Int) {
+
+                }
+
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
+                ) {
+
+                }
+
+                override fun onPageSelected(position: Int) {
+                    indicator.selectedPosition = position
+                }
+            } )
             viewPagerAdapter = ViewPagerAdapter().also { adapter = it }
         }
+
 
         this.setConstraintSet(ConstraintSet().apply {
             clone(context, R.layout.layout_place_holder)

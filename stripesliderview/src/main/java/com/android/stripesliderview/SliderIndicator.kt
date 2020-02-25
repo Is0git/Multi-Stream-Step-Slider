@@ -12,7 +12,7 @@ import kotlin.math.roundToInt
 
 class SliderIndicator : View {
 
-    var indicatorsSize = 5
+    var indicatorsSize = 3
 
     var circleRadius = 25f
 
@@ -22,7 +22,11 @@ class SliderIndicator : View {
 
     val selectedCircleRadius = 30f
 
-    val selectedPosition = 2
+    var selectedPosition = 2
+    set(value) {
+        field = value
+        invalidate()
+    }
 
     val selectedCircleDiameter = selectedCircleRadius * 2
 
