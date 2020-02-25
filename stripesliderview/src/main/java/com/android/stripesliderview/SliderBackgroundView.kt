@@ -42,7 +42,7 @@ class SliderBackgroundView : View {
             alpha = 200
             style = Paint.Style.FILL_AND_STROKE
             isAntiAlias = true
-            strokeWidth = 30f
+            strokeWidth = 50f
             shader = BitmapShader(bgBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
         }
     }
@@ -54,7 +54,7 @@ class SliderBackgroundView : View {
             val width = this@SliderBackgroundView.width.toFloat()
             val height = this@SliderBackgroundView.height.toFloat()
             lineTo(0f, height*0.87f)
-            cubicTo(width * 0.20f, height * 1.04f, width * 0.50f, height * 1.04f, width, height  * 0.85f)
+            cubicTo(width * 0.20f, height * 1.03f, width * 0.50f, height * 1.04f, width, height  * 0.85f)
             lineTo(width, 0f)
             close()
         }

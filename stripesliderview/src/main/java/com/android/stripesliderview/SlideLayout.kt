@@ -2,15 +2,11 @@ package com.android.stripesliderview
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
-import android.view.ViewOutlineProvider
-import android.widget.Button
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.view.marginBottom
 import com.android.eminogoview.EminogoView
 import com.google.android.material.button.MaterialButton
 
@@ -82,7 +78,8 @@ class SlideLayout : ConstraintLayout {
         signUpButton = MaterialButton(context!!).apply {
             text = "SIGN IN"
             typeface = ResourcesCompat.getFont(context, R.font.myriad_pro)
-            this.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.colorPrimary))
+            this.backgroundTintList =
+                ColorStateList.valueOf(resources.getColor(R.color.colorPrimary))
             this.cornerRadius = 80
             this.textSize = 25f
             this.elevation = 100f
@@ -98,7 +95,7 @@ class SlideLayout : ConstraintLayout {
                 }
         }
 
-        nextButton = MaterialButton(context,null, R.attr.borderlessButtonStyle).apply {
+        nextButton = MaterialButton(context, null, R.attr.borderlessButtonStyle).apply {
             text = "NEXT"
             typeface = ResourcesCompat.getFont(context, R.font.ostrich)
             this.textSize = 25f
