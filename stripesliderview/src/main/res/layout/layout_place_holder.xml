@@ -22,7 +22,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/background_id"
         app:layout_constraintTop_toTopOf="@+id/background_id" />
 
-    <com.android.stripesliderview.SliderIndicator
+    <com.android.stripesliderview.viewpager.SliderIndicator
         android:id="@+id/indicators"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

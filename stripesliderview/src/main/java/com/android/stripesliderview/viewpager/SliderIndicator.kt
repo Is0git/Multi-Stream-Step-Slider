@@ -1,4 +1,4 @@
-package com.android.stripesliderview
+package com.android.stripesliderview.viewpager
 
 import android.content.Context
 import android.content.res.Resources
@@ -7,7 +7,7 @@ import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
-import androidx.core.view.marginStart
+import com.android.stripesliderview.R
 import kotlin.math.roundToInt
 
 class SliderIndicator : View {
@@ -51,11 +51,15 @@ class SliderIndicator : View {
 
     fun init(context: Context?, attrs: AttributeSet? = null) {
         defaultCirclePaint = Paint().apply {
-            shader = LinearGradient(0f, 0f, 0f, selectedCircleDiameter, resources.getColor(R.color.colorSurface), resources.getColor(R.color.colorOnSurface), Shader.TileMode.CLAMP)
+            shader = LinearGradient(0f, 0f, 0f, selectedCircleDiameter, resources.getColor(
+                R.color.colorSurface
+            ), resources.getColor(R.color.colorOnSurface), Shader.TileMode.CLAMP)
         }
 
         selectedIndicatorPaint = Paint().apply {
-            shader = LinearGradient(0f, 0f, 0f, selectedCircleDiameter, resources.getColor(R.color.colorPrimary), resources.getColor(R.color.colorOnSecondaryVariant), Shader.TileMode.CLAMP)
+            shader = LinearGradient(0f, 0f, 0f, selectedCircleDiameter, resources.getColor(
+                R.color.colorPrimary
+            ), resources.getColor(R.color.colorOnSecondaryVariant), Shader.TileMode.CLAMP)
         }
     }
 

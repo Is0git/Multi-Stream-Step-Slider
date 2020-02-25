@@ -1,16 +1,14 @@
 package com.android.stripesliderview
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.util.AttributeSet
 import android.view.View
-import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.res.ResourcesCompat
 import androidx.viewpager2.widget.ViewPager2
-import com.android.eminogoview.EminogoView
+import com.android.stripesliderview.viewpager.SliderIndicator
 import com.google.android.material.button.MaterialButton
 
 class SlideLayout : ConstraintLayout {
@@ -42,7 +40,9 @@ class SlideLayout : ConstraintLayout {
             this.id = R.id.background_id
         }
 
-        indicator = SliderIndicator(context).apply {
+        indicator = SliderIndicator(
+            context
+        ).apply {
             id = R.id.indicators
         }
 
@@ -74,6 +74,10 @@ class SlideLayout : ConstraintLayout {
                 }
             } )
             viewPagerAdapter = ViewPagerAdapter().also { adapter = it }
+            setPageTransformer { page, position ->
+                page.scaleY = 1 - (0.40f * kotlin.math.abs(position))
+                page.scaleX = 1 - (0.40f * kotlin.math.abs(position))
+            }
         }
 
 

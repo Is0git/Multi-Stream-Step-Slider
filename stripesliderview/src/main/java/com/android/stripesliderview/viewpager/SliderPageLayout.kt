@@ -1,4 +1,4 @@
-package com.android.stripesliderview
+package com.android.stripesliderview.viewpager
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -9,6 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.res.ResourcesCompat
 import com.android.eminogoview.EminogoView
+import com.android.stripesliderview.R
 import com.google.android.material.button.MaterialButton
 
 class SliderPageLayout : ConstraintLayout {
@@ -47,14 +48,19 @@ class SliderPageLayout : ConstraintLayout {
             this.textSize = 50f
             this.textAlignment = View.TEXT_ALIGNMENT_CENTER
             this.id = R.id.sign_up_text
-            typeface = ResourcesCompat.getFont(context!!, R.font.ostrich)
+            typeface = ResourcesCompat.getFont(context!!,
+                R.font.ostrich
+            )
         }
 
         signUpButton = MaterialButton(context!!).apply {
             id = R.id.signUpButton
             text = "SIGN IN"
-            typeface = ResourcesCompat.getFont(context, R.font.myriad_pro)
-            this.backgroundTintList = ColorStateList.valueOf(ResourcesCompat.getColor(resources,R.color.colorPrimary, null))
+            typeface = ResourcesCompat.getFont(context,
+                R.font.myriad_pro
+            )
+            this.backgroundTintList = ColorStateList.valueOf(ResourcesCompat.getColor(resources,
+                R.color.colorPrimary, null))
             this.cornerRadius = 80
             this.textSize = 25f
         }
