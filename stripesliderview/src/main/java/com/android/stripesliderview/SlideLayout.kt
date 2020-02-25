@@ -67,17 +67,19 @@ class SlideLayout : ConstraintLayout {
                     positionOffset: Float,
                     positionOffsetPixels: Int
                 ) {
-
+                    indicator.selectedPosition = position
                 }
 
                 override fun onPageSelected(position: Int) {
-                    indicator.selectedPosition = position
+
+
                 }
             } )
             viewPagerAdapter = ViewPagerAdapter().also { adapter = it }
             setPageTransformer { page, position ->
-                page.scaleY = 1 - (0.40f * kotlin.math.abs(position))
-                page.scaleX = 1 - (0.40f * kotlin.math.abs(position))
+                page.scaleY = 1 - (0.90f * kotlin.math.abs(position))
+                page.scaleX = 1 - (0.90f * kotlin.math.abs(position))
+                indicator.animPosition = position
             }
         }
 

@@ -8,6 +8,7 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
 import com.android.stripesliderview.R
+import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
 
 class SliderIndicator : View {
@@ -22,11 +23,17 @@ class SliderIndicator : View {
 
     val selectedCircleRadius = 30f
 
-    var selectedPosition = 2
-    set(value) {
-        field = value
-        invalidate()
-    }
+    var selectedPosition = 1
+
+
+
+    var animPosition = 1f
+        set(value) {
+            field = value
+            invalidate()
+        }
+
+    lateinit var selectedOvalPaint: Paint
 
     val selectedCircleDiameter = selectedCircleRadius * 2
 
@@ -55,6 +62,10 @@ class SliderIndicator : View {
                 R.color.colorPrimary
             ), resources.getColor(R.color.colorOnSecondaryVariant), Shader.TileMode.CLAMP)
         }
+
+        selectedOvalPaint = Paint().apply {
+            color = Color.BLACK
+        }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -74,16 +85,18 @@ class SliderIndicator : View {
         val midY = height / 2f
         Log.d("TEST", "CANVAS: ${canvas?.width}, NORMAL: $width MEASURED: $measuredWidth")
 
-        canvas?.drawCircle(circleRadius + paddingStart, midY, circleRadius, if (selectedPosition == 0) selectedIndicatorPaint else defaultCirclePaint)
+        canvas?.drawCircle(circleRadius + paddingStart, midY, circleRadius, defaultCirclePaint)
 
         val midIndicatorPadding = circleRadius + paddingStart
         for(a in 1 until indicatorsSize) {
-            if (a == selectedPosition) {
-                canvas?.drawCircle((a * circleDiameter) + midIndicatorPadding + (indicatorsMargin *a), midY, selectedCircleRadius, selectedIndicatorPaint)
-            } else {
                 canvas?.drawCircle((a * circleDiameter) + midIndicatorPadding + (indicatorsMargin *a), midY, circleRadius, defaultCirclePaint)
-            }
+
         }
+        val ovalLenght = indicatorsMargin + circleDiameter
+        val gap = (indicatorsMargin + circleDiameter) * selectedPosition
+        val startAnimPos = if (animPosition == 0f) 0f else (indicatorsMargin + circleDiameter) * (1 - animPosition.absoluteValue)
+        Log.d("GAP", "VALIUE: ${gap * 1 - animPosition.absoluteValue} ANIMP: ${animPosition.absoluteValue} POSITION: $selectedPosition")
+        canvas?.drawOval(gap + startAnimPos,0f, gap + circleDiameter +startAnimPos, 50f, selectedIndicatorPaint)
     }
 }
 
