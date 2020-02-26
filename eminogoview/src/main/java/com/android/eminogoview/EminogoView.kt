@@ -57,16 +57,7 @@ class EminogoView : View {
         init(context)
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    constructor(
-        context: Context?,
-        attrs: AttributeSet?,
-        defStyleAttr: Int,
-        defStyleRes: Int
-    ) : super(context, attrs, defStyleAttr, defStyleRes)
-
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    fun init(context: Context?) {
+    private fun init(context: Context?) {
         underCirclePaint = Paint().apply {
             color = Color.WHITE
         }
