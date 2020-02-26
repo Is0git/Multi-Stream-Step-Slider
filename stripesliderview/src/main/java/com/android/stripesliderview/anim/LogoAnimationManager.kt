@@ -47,7 +47,7 @@ class LogoAnimationManager(animatedView: EminogoView, isSequential: Boolean) :
 
 
         val circleAnimator =
-            AnimatorBuilder().addDuration(500).addInterpolator(FastOutSlowInInterpolator())
+            AnimatorBuilder().addDuration(100).addInterpolator(FastOutSlowInInterpolator())
                 .build(propertyValues["alpha"]!!) {
                     animatedView.apply {
                         val alphaAnimatedValue = it.getAnimatedValue("alpha") as Int
@@ -58,10 +58,10 @@ class LogoAnimationManager(animatedView: EminogoView, isSequential: Boolean) :
                 }
 
         val twitchAnimator =
-            AnimatorBuilder().addDuration(250).addInterpolator(FastOutSlowInInterpolator())
+            AnimatorBuilder().addDuration(200).addInterpolator(FastOutSlowInInterpolator())
                 .build(propertyValues["alpha"]!!) {
                     animatedView.apply {
-                        twichLogoAlpha = it.getAnimatedValue("alpha") as Int
+                        logoAlpha = it.getAnimatedValue("alpha") as Int
                         invalidate()
                     }
                 }

@@ -1,4 +1,4 @@
-package com.android.stripesliderview.viewpager
+package com.android.stripesliderview.slider
 
 import android.content.Context
 import android.content.res.Resources

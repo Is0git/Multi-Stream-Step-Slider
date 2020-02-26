@@ -1,4 +1,4 @@
-package com.android.stripesliderview.viewpager
+package com.android.stripesliderview.slider
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -15,8 +15,8 @@ import com.google.android.material.button.MaterialButton
 class SliderPageLayout : ConstraintLayout {
 
     lateinit var eminogoView: EminogoView
-    lateinit var signUpText: TextView
-    lateinit var signUpButton: MaterialButton
+    lateinit var mainTextView: TextView
+    lateinit var mainButton: MaterialButton
 
     constructor(context: Context?) : super(context) {
         init(context)
@@ -37,13 +37,10 @@ class SliderPageLayout : ConstraintLayout {
 
     private fun init(context: Context?) {
 
-
-
-
         eminogoView = EminogoView(context).apply {
             id = R.id.eminogo_view_id
         }
-        signUpText = TextView(context).apply {
+        mainTextView = TextView(context).apply {
             this.text = "SIGN UP WITH TWITCH"
             this.textSize = 50f
             this.textAlignment = View.TEXT_ALIGNMENT_CENTER
@@ -53,7 +50,7 @@ class SliderPageLayout : ConstraintLayout {
             )
         }
 
-        signUpButton = MaterialButton(context!!).apply {
+        mainButton = MaterialButton(context!!).apply {
             id = R.id.signUpButton
             text = "SIGN IN"
             typeface = ResourcesCompat.getFont(context,
@@ -73,8 +70,8 @@ class SliderPageLayout : ConstraintLayout {
 
         addView(eminogoView)
 
-        addView(signUpText)
+        addView(mainTextView)
 
-        addView(signUpButton)
+        addView(mainButton)
     }
 }

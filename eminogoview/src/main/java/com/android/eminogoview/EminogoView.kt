@@ -4,12 +4,9 @@ import android.content.Context
 import android.content.res.Configuration
 import android.graphics.*
 import android.graphics.drawable.VectorDrawable
-import android.os.Build
 import android.util.AttributeSet
 import android.view.View
-import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.graphics.alpha
 import com.android.getBitmap
 
 
@@ -30,7 +27,7 @@ class EminogoView : View {
     var circleAlpha = 0
     val circleSizeRatio = 0.75f
 
-    var twichLogoAlpha = 0
+    var logoAlpha = 0
     val logoHeightSizeRatio = 0.70f
     val logoWidthSizeRatio = 1f
 
@@ -40,6 +37,10 @@ class EminogoView : View {
 
     var startAngle = -45f
     var sweepAngle = 180f
+
+    var circleDrawableId = R.drawable.ic_circle
+    var lineDrawableId = R.drawable.ic_lines
+    var logoDrawableId = R.drawable.ic_twitch_logo
 
     constructor(context: Context?) : super(context) {
         init(context)
@@ -67,16 +68,16 @@ class EminogoView : View {
 
         }
         twitchPaint = Paint().apply {
-            alpha = twichLogoAlpha
+            alpha = logoAlpha
 
         }
 
         linesPaint = Paint().apply {
             alpha = linesAlpha
         }
-        circleDrawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_circle, null) as VectorDrawable
-        lineDrawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_image, null) as VectorDrawable
-        twichDrawable = ResourcesCompat.getDrawable(resources,R.drawable.ic_twitch_logo, null) as VectorDrawable
+        circleDrawable = ResourcesCompat.getDrawable(resources, circleDrawableId, null) as VectorDrawable
+        lineDrawable = ResourcesCompat.getDrawable(resources, lineDrawableId, null) as VectorDrawable
+        twichDrawable = ResourcesCompat.getDrawable(resources, logoDrawableId, null) as VectorDrawable
 
 
     }
@@ -117,7 +118,7 @@ class EminogoView : View {
         val logoOffSetY = midY - (height *logoHeightSizeRatio) /2f
 
         linesPaint.alpha = linesAlpha
-        twitchPaint.alpha = twichLogoAlpha
+        twitchPaint.alpha = logoAlpha
         circlePaint.alpha = circleAlpha
 
         canvas?.drawArc(0f, 0f, width.toFloat() * 1f, height.toFloat() * 1f, startAngle, sweepAngle, true, underCirclePaint)

@@ -1,17 +1,16 @@
-package com.android.stripesliderview
+package com.android.stripesliderview.slider
 
 import android.content.Context
 import android.graphics.*
-import android.graphics.drawable.BitmapDrawable
 import android.util.AttributeSet
 import android.view.View
+import com.android.stripesliderview.R
 
 class SliderBackgroundView : View {
     lateinit var bgShapePath: Path
     lateinit var bgShapePaint: Paint
     lateinit var underBgPaint: Paint
 
-    var gap = 200f
     constructor(context: Context?) : super(context){init(context)}
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {init(context, attrs)}
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
@@ -20,13 +19,6 @@ class SliderBackgroundView : View {
         defStyleAttr
     ) {init(context, attrs)}
 
-    constructor(
-        context: Context?,
-        attrs: AttributeSet?,
-        defStyleAttr: Int,
-        defStyleRes: Int
-    ) : super(context, attrs, defStyleAttr, defStyleRes) {init(context, attrs)}
-
 
 
     fun init(context: Context?, attrs: AttributeSet? = null) {
@@ -34,7 +26,9 @@ class SliderBackgroundView : View {
 
         underBgPaint = Paint().apply {  color = Color.parseColor("#E7E7E7")
         }
-        val bgBitmap = BitmapFactory.decodeResource(context?.resources, R.drawable.stripe_slider_bg)
+        val bgBitmap = BitmapFactory.decodeResource(context?.resources,
+            R.drawable.stripe_slider_bg)
+
         bgShapePaint = Paint().apply {
             color = Color.BLACK
             isDither = true
@@ -48,7 +42,6 @@ class SliderBackgroundView : View {
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        gap = height * 0.20f
         bgShapePath.apply {
             val width = this@SliderBackgroundView.width.toFloat()
             val height = this@SliderBackgroundView.height.toFloat()
