@@ -26,7 +26,6 @@ class SliderIndicator : View {
     var selectedPosition = 1
 
 
-
     var animPosition = 1f
         set(value) {
             field = value
@@ -39,28 +38,40 @@ class SliderIndicator : View {
 
     lateinit var selectedIndicatorPaint: Paint
 
-    lateinit var defaultCirclePaint : Paint
+    lateinit var defaultCirclePaint: Paint
 
-    constructor(context: Context?) : super(context) {init(context)}
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {init(context)}
+    constructor(context: Context?) : super(context) {
+        init(context)
+    }
+
+    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
+        init(context)
+    }
+
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
         context,
         attrs,
         defStyleAttr
-    ) {init(context)}
+    ) {
+        init(context)
+    }
 
 
     fun init(context: Context?, attrs: AttributeSet? = null) {
         defaultCirclePaint = Paint().apply {
-            shader = LinearGradient(0f, 0f, 0f, selectedCircleDiameter, resources.getColor(
-                R.color.colorSurface
-            ), resources.getColor(R.color.colorOnSurface), Shader.TileMode.CLAMP)
+            shader = LinearGradient(
+                0f, 0f, 0f, selectedCircleDiameter, resources.getColor(
+                    R.color.colorSurface
+                ), resources.getColor(R.color.colorOnSurface), Shader.TileMode.CLAMP
+            )
         }
 
         selectedIndicatorPaint = Paint().apply {
-            shader = LinearGradient(0f, 0f, 0f, selectedCircleDiameter, resources.getColor(
-                R.color.colorPrimary
-            ), resources.getColor(R.color.colorOnSecondaryVariant), Shader.TileMode.CLAMP)
+            shader = LinearGradient(
+                0f, 0f, 0f, selectedCircleDiameter, resources.getColor(
+                    R.color.colorPrimary
+                ), resources.getColor(R.color.colorOnSecondaryVariant), Shader.TileMode.CLAMP
+            )
         }
 
         selectedOvalPaint = Paint().apply {
@@ -70,33 +81,49 @@ class SliderIndicator : View {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
 
-        val desiredWidth = (circleDiameter * indicatorsSize)+ paddingStart + paddingEnd + (indicatorsMargin * indicatorsSize - 1)
+        val desiredWidth =
+            (circleDiameter * indicatorsSize) + paddingStart + paddingEnd + (indicatorsMargin * indicatorsSize - 1)
         val desiredHeight = (selectedCircleRadius * 2) + paddingTop + paddingBottom
         val width = resolveSize(desiredWidth.toInt(), widthMeasureSpec)
         val height = resolveSize(desiredHeight.toInt(), heightMeasureSpec)
-        Log.d("TEST", "CANVAS: ${desiredWidth}, NORMAL: $width PADDING START: $paddingStart PADDAINGEND: $paddingEnd")
+        Log.d(
+            "TEST",
+            "CANVAS: ${desiredWidth}, NORMAL: $width PADDING START: $paddingStart PADDAINGEND: $paddingEnd"
+        )
         setMeasuredDimension(width, height)
 
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        if(indicatorsSize == 0) return
+        if (indicatorsSize == 0) return
         val midY = height / 2f
-        Log.d("TEST", "CANVAS: ${canvas?.width}, NORMAL: $width MEASURED: $measuredWidth")
+//        Log.d("TEST", "CANVAS: ${canvas?.width}, NORMAL: $width MEASURED: $measuredWidth")
 
         canvas?.drawCircle(circleRadius + paddingStart, midY, circleRadius, defaultCirclePaint)
 
         val midIndicatorPadding = circleRadius + paddingStart
-        for(a in 1 until indicatorsSize) {
-                canvas?.drawCircle((a * circleDiameter) + midIndicatorPadding + (indicatorsMargin *a), midY, circleRadius, defaultCirclePaint)
+        for (a in 1 until indicatorsSize) {
+            canvas?.drawCircle(
+                (a * circleDiameter) + midIndicatorPadding + (indicatorsMargin * a),
+                midY,
+                circleRadius,
+                defaultCirclePaint
+            )
 
         }
         val ovalLenght = indicatorsMargin + circleDiameter
         val gap = (indicatorsMargin + circleDiameter) * selectedPosition
-        val startAnimPos = if (animPosition == 0f) 0f else (indicatorsMargin + circleDiameter) * (1 - animPosition.absoluteValue)
-        Log.d("GAP", "VALIUE: ${gap * 1 - animPosition.absoluteValue} ANIMP: ${animPosition.absoluteValue} POSITION: $selectedPosition")
-        canvas?.drawOval(gap + startAnimPos,0f, gap + circleDiameter +startAnimPos, 50f, selectedIndicatorPaint)
+        val startAnimPos =
+            if (animPosition == 0f) 0f else ovalLenght * (1 - animPosition.absoluteValue)
+//        Log.d("GAP", "VALIUE: ${gap * 1 - animPosition.absoluteValue} ANIMP: ${animPosition.absoluteValue} POSITION: $selectedPosition")
+        canvas?.drawOval(
+            gap + startAnimPos,
+            0f,
+            gap + circleDiameter + startAnimPos,
+            50f,
+            selectedIndicatorPaint
+        )
     }
 }
 

@@ -1,5 +1,9 @@
 package com.android.stripesliderview
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
+import android.animation.ValueAnimator
 import android.content.Context
 import android.content.res.Resources
 import android.util.AttributeSet
@@ -18,6 +22,8 @@ class SlideLayout : ConstraintLayout {
     lateinit var indicator: SliderIndicator
     lateinit var viewPager: ViewPager2
     lateinit var viewPagerAdapter: ViewPagerAdapter
+
+    var animatorSet: AnimatorSet? = null
 
     constructor(context: Context?) : super(context) {
         init(context)
@@ -91,7 +97,6 @@ class SlideLayout : ConstraintLayout {
             clone(context, R.layout.layout_place_holder)
         })
 
-
         addView(sliderBackgroundView)
 
         addView(indicator)
@@ -100,6 +105,7 @@ class SlideLayout : ConstraintLayout {
 
         addView(viewPager)
 
+        animatorSet = AnimatorSet()
 
     }
 

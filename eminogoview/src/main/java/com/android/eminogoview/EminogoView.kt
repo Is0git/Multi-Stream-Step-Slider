@@ -9,6 +9,7 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.alpha
 import com.android.getBitmap
 
 
@@ -25,11 +26,20 @@ class EminogoView : View {
     lateinit var twitchPaint: Paint
     lateinit var circleRectF: RectF
     lateinit var underCirclePaint: Paint
-
+    lateinit var linesPaint: Paint
+    var circleAlpha = 0
     val circleSizeRatio = 0.75f
 
+    var twichLogoAlpha = 0
     val logoHeightSizeRatio = 0.70f
     val logoWidthSizeRatio = 1f
+
+    var linesAlpha = 0
+    var linesX = 0f
+    var linesY = 0f
+
+    var startAngle = -45f
+    var sweepAngle = 180f
 
     constructor(context: Context?) : super(context) {
         init(context)
@@ -62,12 +72,16 @@ class EminogoView : View {
         }
 
         circlePaint = Paint().apply {
+            alpha = circleAlpha
 
         }
         twitchPaint = Paint().apply {
-            strokeWidth = 20f
-            color = Color.WHITE
-            style = Paint.Style.STROKE
+            alpha = twichLogoAlpha
+
+        }
+
+        linesPaint = Paint().apply {
+            alpha = linesAlpha
         }
         circleDrawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_circle, null) as VectorDrawable
         lineDrawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_image, null) as VectorDrawable
@@ -82,10 +96,6 @@ class EminogoView : View {
         val widthSize = (MeasureSpec.getSize(widthMeasureSpec) * 0.80f).toInt()
         val heightMode = (MeasureSpec.getSize(heightMeasureSpec) * 0.80f).toInt()
         val heightSize = MeasureSpec.getSize(heightMeasureSpec)
-
-//        var width = if (widthMode == MeasureSpec.AT_MOST) widthSize else widthSize
-//
-//        var height = if (heightMode == MeasureSpec.AT_MOST) widthSize else heightSize
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setMeasuredDimension(heightSize, heightSize)
@@ -115,12 +125,14 @@ class EminogoView : View {
         val logoOffSetX = midX - (width *logoWidthSizeRatio) /2f
         val logoOffSetY = midY - (height *logoHeightSizeRatio) /2f
 
-        canvas?.drawArc(0f, 0f, width.toFloat() * 1f, height.toFloat() * 1f, -45f, 180f, true, underCirclePaint)
-        canvas?.drawBitmap(lineBitmap, 0f, 0f, circlePaint)
-        canvas?.drawBitmap(circleBitMap, circleOffSetX.toFloat(), circleOffSetY.toFloat(), circlePaint)
-        canvas?.drawBitmap(twitchBitmap, logoOffSetX.toFloat(), logoOffSetY * 0.50f, twitchPaint)
+        linesPaint.alpha = linesAlpha
+        twitchPaint.alpha = twichLogoAlpha
+        circlePaint.alpha = circleAlpha
 
-
+        canvas?.drawArc(0f, 0f, width.toFloat() * 1f, height.toFloat() * 1f, startAngle, sweepAngle, true, underCirclePaint)
+        canvas?.drawBitmap(lineBitmap, linesX, linesY, linesPaint)
+        canvas?.drawBitmap(circleBitMap, circleOffSetX, circleOffSetY, circlePaint)
+        canvas?.drawBitmap(twitchBitmap, logoOffSetX, logoOffSetY * 0.50f, twitchPaint)
 
     }
 }
