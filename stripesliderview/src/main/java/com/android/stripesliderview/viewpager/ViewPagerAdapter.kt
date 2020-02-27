@@ -1,14 +1,15 @@
 package com.android.stripesliderview.viewpager
 
+import android.animation.AnimatorSet
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.simplepass.loadingbutton.customViews.CircularProgressButton
 import com.android.eminogoview.EminogoView
 import com.android.stripesliderview.R
 import com.android.stripesliderview.anim.LogoAnimationManager
+import com.android.stripesliderview.databinding.PlaceHolderBinding
 import com.google.android.material.textview.MaterialTextView
 
 class ViewPagerAdapter(
@@ -17,31 +18,24 @@ class ViewPagerAdapter(
 ) : RecyclerView.Adapter<ViewPagerAdapter.MyViewHolder>() {
 
 
-    class MyViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-
-        private var logoAnimationManager =
-            LogoAnimationManager(view.findViewById(R.id.eminogo_view_id), true)
+    class MyViewHolder(val binding: PlaceHolderBinding) : RecyclerView.ViewHolder(binding.root) {
+        var logoAnimationManager = LogoAnimationManager(binding.eminogoViewId, true)
 
         init {
-            logoAnimationManager.playAnimation()
-            view.findViewById<CircularProgressButton>(R.id.signUpButton).setOnClickListener {
-                (it as CircularProgressButton).startAnimation()
-            }
-            view.setOnClickListener {
-                view.findViewById<CircularProgressButton>(R.id.signUpButton).doneLoadingAnimation(
-                    R.color.colorSurface,
-                    BitmapFactory.decodeResource(view.context.resources, R.drawable.done_icon)
-                )
+            binding.apply {
+                logoAnimationManager.playAnimation()
+//                signUpButton.setOnClickListener { signUpButton.startAnimation() }
+//                signUpButton.doneLoadingAnimation(
+//                    R.color.colorSurface,
+//                    BitmapFactory.decodeResource(root.context.resources, R.drawable.done_icon)
+//                )
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val viewHolder =
-            LayoutInflater.from(parent.context).inflate(R.layout.place_holder, parent, false)
-        return MyViewHolder(
-            viewHolder
-        )
+        val binding = PlaceHolderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return MyViewHolder(binding)
     }
 
     fun addPages(pageData: List<PageData>) {
@@ -54,22 +48,26 @@ class ViewPagerAdapter(
     }
 
     override fun onViewRecycled(holder: MyViewHolder) {
-
+        holder.logoAnimationManager.endAnimation()
     }
+
+
+    override fun onViewDetachedFromWindow(holder: MyViewHolder) {
+        holder.logoAnimationManager.cancelAnimation()
+    }
+
+
+
     override fun getItemCount(): Int = pageDataList.count()
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val item = pageDataList[position]
-        val eminogoView = holder.view.findViewById<EminogoView>(R.id.eminogo_view_id)
 
-        eminogoView.apply {
-            circleDrawableId = item.circleDrawableId
-            logoDrawableId = item.logoDrawableId
-            circleDrawableId = item.underCircleDrawableId
+        holder.apply {
+            binding.dataItem = pageDataList[position]
+            binding.eminogoViewId.apply {
+                logoHeightSizeRatio = pageDataList[position].logoHeightRatio
+                logoWidthSizeRatio = pageDataList[position].logoWidthRatio
+                logoOffsetRatio = pageDataList[position].logoOffSetRatio
+            }
         }
-
-        holder.view.findViewById<MaterialTextView>(R.id.sign_up_text).text = item.mainText
-        holder.view.findViewById<CircularProgressButton>(R.id.signUpButton).text =
-            item.pageButtonText
     }
-
 }

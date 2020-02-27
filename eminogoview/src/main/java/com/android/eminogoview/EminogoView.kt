@@ -4,8 +4,10 @@ import android.content.Context
 import android.content.res.Configuration
 import android.graphics.*
 import android.graphics.drawable.VectorDrawable
+import android.os.Build
 import android.util.AttributeSet
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
 import com.android.getBitmap
 
@@ -28,8 +30,9 @@ class EminogoView : View {
     val circleSizeRatio = 0.75f
 
     var logoAlpha = 0
-    val logoHeightSizeRatio = 0.70f
-    val logoWidthSizeRatio = 1f
+    var logoHeightSizeRatio = 0.70f
+    var logoWidthSizeRatio = 1f
+    var logoOffsetRatio = 0.50f
 
     var linesAlpha = 0
     var linesX = 0f
@@ -41,13 +44,19 @@ class EminogoView : View {
     var circleDrawableId = R.drawable.ic_circle
     var lineDrawableId = R.drawable.ic_lines
     var logoDrawableId = R.drawable.ic_twitch_logo
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    set(value) {
+        field = value
+        twichDrawable = ResourcesCompat.getDrawable(resources, logoDrawableId, null) as VectorDrawable
+        twitchBitmap = getBitmap(twichDrawable, (width *logoWidthSizeRatio).toInt(), (height *logoHeightSizeRatio).toInt())!!
+    }
 
     constructor(context: Context?) : super(context) {
         init(context)
     }
 
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
-        init(context)
+        init(context, attrs)
     }
 
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
@@ -55,10 +64,18 @@ class EminogoView : View {
         attrs,
         defStyleAttr
     ) {
-        init(context)
+        init(context, attrs)
     }
 
-    private fun init(context: Context?) {
+    private fun init(context: Context?, attrs: AttributeSet? = null) {
+
+        if (attrs != null) {
+            context?.obtainStyledAttributes(attrs, R.styleable.EminogoView)?.apply {
+
+                recycle()
+            }
+        }
+
         underCirclePaint = Paint().apply {
             color = Color.WHITE
         }
@@ -75,11 +92,6 @@ class EminogoView : View {
         linesPaint = Paint().apply {
             alpha = linesAlpha
         }
-        circleDrawable = ResourcesCompat.getDrawable(resources, circleDrawableId, null) as VectorDrawable
-        lineDrawable = ResourcesCompat.getDrawable(resources, lineDrawableId, null) as VectorDrawable
-        twichDrawable = ResourcesCompat.getDrawable(resources, logoDrawableId, null) as VectorDrawable
-
-
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -96,14 +108,17 @@ class EminogoView : View {
         }
     }
 
-    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-        super.onLayout(changed, left, top, right, bottom)
-        if (::circleBitMap.isInitialized) return
-        else {
-            circleBitMap = getBitmap(circleDrawable, (width *circleSizeRatio).toInt(), (height *circleSizeRatio).toInt())!!
-            lineBitmap = getBitmap(lineDrawable, width, height)!!
-            twitchBitmap = getBitmap(twichDrawable, (width *logoWidthSizeRatio).toInt(), (height *logoHeightSizeRatio).toInt())!!
-        }
+
+
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        circleDrawable = ResourcesCompat.getDrawable(resources, circleDrawableId, null) as VectorDrawable
+        lineDrawable = ResourcesCompat.getDrawable(resources, lineDrawableId, null) as VectorDrawable
+        twichDrawable = ResourcesCompat.getDrawable(resources, logoDrawableId, null) as VectorDrawable
+
+        circleBitMap = getBitmap(circleDrawable, (width *circleSizeRatio).toInt(), (height *circleSizeRatio).toInt())!!
+        lineBitmap = getBitmap(lineDrawable, width, height)!!
+
+
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -124,7 +139,7 @@ class EminogoView : View {
         canvas?.drawArc(0f, 0f, width.toFloat() * 1f, height.toFloat() * 1f, startAngle, sweepAngle, true, underCirclePaint)
         canvas?.drawBitmap(lineBitmap, linesX, linesY, linesPaint)
         canvas?.drawBitmap(circleBitMap, circleOffSetX, circleOffSetY, circlePaint)
-        canvas?.drawBitmap(twitchBitmap, logoOffSetX, logoOffSetY * 0.50f, twitchPaint)
+        canvas?.drawBitmap(twitchBitmap, logoOffSetX, logoOffSetY * logoOffsetRatio, twitchPaint)
 
     }
 }

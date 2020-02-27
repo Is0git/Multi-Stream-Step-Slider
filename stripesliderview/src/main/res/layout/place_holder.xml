@@ -1,48 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout>
+    <data>
+        <variable
+            name="dataItem"
+            type="com.android.stripesliderview.viewpager.PageData" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <com.android.eminogoview.EminogoView
-        android:id="@+id/eminogo_view_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/sign_up_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.51"
-        app:layout_constraintVertical_chainStyle="spread" />
+        <com.android.eminogoview.EminogoView
+            android:id="@+id/eminogo_view_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/sign_up_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:logoDrawableId="@{dataItem.logoDrawableId}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.51"
+            app:layout_constraintVertical_chainStyle="spread" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/sign_up_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textSize="45sp"
-        android:fontFamily="@font/ostrich"
-        app:layout_constraintBottom_toTopOf="@+id/signUpButton"
-        app:layout_constraintEnd_toEndOf="@+id/eminogo_view_id"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/eminogo_view_id"
-        app:layout_constraintTop_toBottomOf="@+id/eminogo_view_id" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/sign_up_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="45sp"
+            android:text="@{dataItem.mainText, default = @string/sign_up}"
+            android:fontFamily="@font/ostrich"
+            app:layout_constraintBottom_toTopOf="@+id/signUpButton"
+            app:layout_constraintEnd_toEndOf="@+id/eminogo_view_id"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/eminogo_view_id"
+            app:layout_constraintTop_toBottomOf="@+id/eminogo_view_id" />
 
-    <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
-        android:id="@+id/signUpButton"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:finalCornerAngle="25dp"
-        app:initialCornerAngle="25dp"
-        android:textColor="@color/colorSurface"
-        app:spinning_bar_color="@color/colorSurface"
-        android:background="@drawable/shape_default"
-        android:text="@string/sign_up"
-        app:layout_constraintEnd_toEndOf="@+id/sign_up_text"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/sign_up_text"
-        app:layout_constraintTop_toBottomOf="@+id/sign_up_text" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/signUpButton"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:textColor="@color/colorSurface"
+            android:background="@drawable/shape_default"
+            android:text="@{dataItem.pageButtonText, default = @string/sign_up}"
+            app:layout_constraintEnd_toEndOf="@+id/sign_up_text"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/sign_up_text"
+            app:layout_constraintTop_toBottomOf="@+id/sign_up_text" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/signUpButton"-->
+<!--            android:layout_width="150dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:finalCornerAngle="25dp"-->
+<!--            app:initialCornerAngle="25dp"-->
+<!--            android:textColor="@color/colorSurface"-->
+<!--            app:spinning_bar_color="@color/colorSurface"-->
+<!--            android:background="@drawable/shape_default"-->
+<!--            android:text="@{dataItem.pageButtonText, default = @string/sign_up}"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/sign_up_text"-->
+<!--            app:layout_constraintHorizontal_bias="0.5"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/sign_up_text"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/sign_up_text" />-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

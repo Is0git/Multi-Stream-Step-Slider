@@ -10,6 +10,13 @@ abstract class AnimationController {
 
     fun pause(animatorSet: AnimatorSet) {
         animatorSet.pause()
+    }
 
+    fun cancel(animatorSet: AnimatorSet) {
+        animatorSet.cancel()
+    }
+
+    fun end(animatorSet: AnimatorSet) {
+        animatorSet.end()
     }
 }

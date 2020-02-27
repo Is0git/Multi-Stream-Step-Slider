@@ -40,6 +40,13 @@ abstract class AnimationManager<T : View>(
         pause(animatorSet)
     }
 
+    fun cancelAnimation() {
+        cancel(animatorSet)
+    }
+
+    fun endAnimation() {
+        end(animatorSet)
+    }
 
     abstract fun createAnimatorValues(animatorValues: MutableMap<String, PropertyValuesHolder>)
 
