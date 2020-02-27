@@ -26,6 +26,7 @@ class SliderIndicator : View {
     var selectedPosition = 1
 
 
+
     var animPosition = 1f
         set(value) {
             field = value
@@ -40,7 +41,8 @@ class SliderIndicator : View {
 
     lateinit var defaultCirclePaint: Paint
 
-    constructor(context: Context?) : super(context) {
+    constructor(context: Context?, itemsCount:Int = 0) : super(context) {
+        this.indicatorsSize = itemsCount
         init(context)
     }
 
@@ -57,7 +59,7 @@ class SliderIndicator : View {
     }
 
 
-    fun init(context: Context?, attrs: AttributeSet? = null) {
+    private fun init(context: Context?, attrs: AttributeSet? = null) {
         defaultCirclePaint = Paint().apply {
             shader = LinearGradient(
                 0f, 0f, 0f, selectedCircleDiameter, resources.getColor(

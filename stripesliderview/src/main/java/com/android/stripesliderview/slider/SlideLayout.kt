@@ -57,7 +57,7 @@ class SlideLayout : ConstraintLayout {
         }
 
         indicator = SliderIndicator(
-            context
+            context, itemsCount
         ).apply {
             id = R.id.indicators
         }
