@@ -1,2 +1,3 @@
 include ':app', ':eminogoview', ':stripesliderview'
 rootProject.name='StepsSlider'
+
