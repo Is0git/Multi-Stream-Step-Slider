@@ -117,6 +117,7 @@ class EminogoView : View {
 
         circleBitMap = getBitmap(circleDrawable, (width *circleSizeRatio).toInt(), (height *circleSizeRatio).toInt())!!
         lineBitmap = getBitmap(lineDrawable, width, height)!!
+        twitchBitmap = getBitmap(twichDrawable, (width * logoWidthSizeRatio).toInt(), (height * logoHeightSizeRatio).toInt())!!
 
 
     }
