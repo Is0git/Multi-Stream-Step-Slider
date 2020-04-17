@@ -1,3 +1,3 @@
-include ':app', ':eminogoview', ':stripesliderview'
+include ':app', ':stripesliderview'
 rootProject.name='StepsSlider'
 

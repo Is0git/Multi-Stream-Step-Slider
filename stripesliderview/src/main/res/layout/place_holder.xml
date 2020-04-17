@@ -36,12 +36,16 @@
             app:layout_constraintStart_toStartOf="@+id/eminogo_view_id"
             app:layout_constraintTop_toBottomOf="@+id/eminogo_view_id" />
 
-        <com.google.android.material.button.MaterialButton
+        <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
             android:id="@+id/signUpButton"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             android:textColor="@color/colorSurface"
+            app:initialCornerAngle="40dp"
+            app:spinning_bar_color="@color/colorSurface"
             android:background="@drawable/shape_default"
             android:text="@{dataItem.pageButtonText, default = @string/sign_up}"
             app:layout_constraintEnd_toEndOf="@+id/sign_up_text"
@@ -49,21 +53,6 @@
             app:layout_constraintStart_toStartOf="@+id/sign_up_text"
             app:layout_constraintTop_toBottomOf="@+id/sign_up_text" />
 
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/signUpButton"-->
-<!--            android:layout_width="150dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:finalCornerAngle="25dp"-->
-<!--            app:initialCornerAngle="25dp"-->
-<!--            android:textColor="@color/colorSurface"-->
-<!--            app:spinning_bar_color="@color/colorSurface"-->
-<!--            android:background="@drawable/shape_default"-->
-<!--            android:text="@{dataItem.pageButtonText, default = @string/sign_up}"-->
-<!--            app:layout_constraintEnd_toEndOf="@+id/sign_up_text"-->
-<!--            app:layout_constraintHorizontal_bias="0.5"-->
-<!--            app:layout_constraintStart_toStartOf="@+id/sign_up_text"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/sign_up_text" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

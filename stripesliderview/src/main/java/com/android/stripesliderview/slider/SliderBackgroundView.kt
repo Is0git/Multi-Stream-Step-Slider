@@ -10,8 +10,9 @@ import com.android.stripesliderview.R
 
 class SliderBackgroundView : View {
     lateinit var bgShapePath: Path
-    lateinit var bgShapePaint: Paint
     lateinit var underBgPaint: Paint
+    lateinit var bgStrokePaint: Paint
+    lateinit var bgStrokePath: Path
 
     constructor(context: Context?) : super(context) {
         init(context)
@@ -32,8 +33,13 @@ class SliderBackgroundView : View {
 
     fun init(context: Context?, attrs: AttributeSet? = null) {
         bgShapePath = Path()
-
         underBgPaint = Paint()
+
+        bgStrokePath = Path()
+        bgStrokePaint = Paint().apply {
+            isAntiAlias = true
+            color = ResourcesCompat.getColor(resources, R.color.colorSurface, null)
+        }
 
     }
 
@@ -66,8 +72,22 @@ class SliderBackgroundView : View {
             lineTo(width, 0f)
             close()
         }
-
-
+        bgStrokePath.apply {
+            val width = this@SliderBackgroundView.width.toFloat()
+            val height = this@SliderBackgroundView.height.toFloat()
+            lineTo(0f, height * 0.90f)
+            cubicTo(
+                width * 0.20f,
+                height * 1.0f,
+                width * 0.50f,
+                height * 1.04f,
+                width,
+                height * 0.86f
+            )
+            lineTo(width, 0f)
+            close()
+        }
+        canvas?.drawPath(bgStrokePath, bgStrokePaint)
         canvas?.drawPath(bgShapePath, underBgPaint)
 
     }

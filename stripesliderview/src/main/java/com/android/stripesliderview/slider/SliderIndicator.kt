@@ -1,15 +1,12 @@
 package com.android.stripesliderview.slider
 
 import android.content.Context
-import android.content.res.Resources
 import android.graphics.*
 import android.util.AttributeSet
-import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
 import com.android.stripesliderview.R
 import kotlin.math.absoluteValue
-import kotlin.math.roundToInt
 
 class SliderIndicator : View {
 
@@ -26,7 +23,6 @@ class SliderIndicator : View {
     var selectedPosition = 1
 
 
-
     var animPosition = 1f
         set(value) {
             field = value
@@ -41,7 +37,7 @@ class SliderIndicator : View {
 
     lateinit var defaultCirclePaint: Paint
 
-    constructor(context: Context?, itemsCount:Int = 0) : super(context) {
+    constructor(context: Context?, itemsCount: Int = 0) : super(context) {
         this.indicatorsSize = itemsCount
         init(context)
     }
@@ -100,7 +96,6 @@ class SliderIndicator : View {
         super.onDraw(canvas)
         if (indicatorsSize == 0) return
         val midY = height / 2f
-//        Log.d("TEST", "CANVAS: ${canvas?.width}, NORMAL: $width MEASURED: $measuredWidth")
 
         canvas?.drawCircle(circleRadius + paddingStart, midY, circleRadius, defaultCirclePaint)
 
@@ -114,27 +109,45 @@ class SliderIndicator : View {
             )
 
         }
-        val ovalLenght = indicatorsMargin + circleDiameter
+        val ovalLength = indicatorsMargin + circleDiameter
         val gap = (indicatorsMargin + circleDiameter) * selectedPosition
-        val startAnimPos =
-            if (animPosition == 0f) 0f else ovalLenght * (1 - animPosition.absoluteValue)
-//        Log.d("GAP", "VALIUE: ${gap * 1 - animPosition.absoluteValue} ANIMP: ${animPosition.absoluteValue} POSITION: $selectedPosition")
+
+        val startXAnimPos: Float
+
+        val startYAnimPos: Float
+
+        val endYPosition: Float
+
+        if (animPosition == 0f) {
+            startXAnimPos = 0f
+            startYAnimPos = 0f
+            endYPosition = circleDiameter
+        } else {
+            val positionInMotion = 1 - animPosition.absoluteValue
+
+            startXAnimPos = ovalLength * positionInMotion
+            if (animPosition.absoluteValue < 0.75f &&  animPosition.absoluteValue > 0.25f) {
+                startYAnimPos = circleDiameter * 0.25f
+                endYPosition = circleDiameter * 0.75f
+            }
+            else if (animPosition.absoluteValue > 0.75f) {
+                endYPosition = circleDiameter * animPosition.absoluteValue
+                startYAnimPos = circleDiameter * positionInMotion
+
+            } else  {
+                endYPosition = circleDiameter * positionInMotion
+                startYAnimPos = circleDiameter * animPosition.absoluteValue
+            }
+
+        }
+
+
         canvas?.drawOval(
-            gap + startAnimPos,
-            0f,
-            gap + circleDiameter + startAnimPos,
-            50f,
+            gap + startXAnimPos,
+            startYAnimPos,
+            gap + circleDiameter + startXAnimPos,
+            endYPosition,
             selectedIndicatorPaint
         )
     }
-}
-
-fun convertDpToPixel(dp: Float): Int {
-    val metrics: DisplayMetrics = Resources.getSystem().displayMetrics
-    val px = dp * (metrics.densityDpi / 160f)
-    return px.roundToInt()
-}
-
-fun convertPixelsToDp(px: Float, context: Context): Float {
-    return px / (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
 }

@@ -4,6 +4,7 @@ import android.animation.AnimatorSet
 import android.content.Context
 import android.content.res.Resources
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
@@ -49,6 +50,7 @@ class SlideLayout : ConstraintLayout {
             }
         }
 
+        background = ResourcesCompat.getDrawable(resources, R.drawable.slider_bg_gradient, null)
 
         sliderBackgroundView = SliderBackgroundView(
             context
@@ -104,6 +106,7 @@ class SlideLayout : ConstraintLayout {
             viewPagerAdapter = ViewPagerAdapter(itemsCount)
                 .also { adapter = it }
             setPageTransformer { page, position ->
+                Log.d("TEST", position.toString())
                 page.scaleY = 1 - (0.90f * kotlin.math.abs(position))
                 page.scaleX = 1 - (0.90f * kotlin.math.abs(position))
                 indicator.animPosition = position

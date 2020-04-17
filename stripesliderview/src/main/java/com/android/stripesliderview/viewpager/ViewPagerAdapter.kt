@@ -23,8 +23,7 @@ class ViewPagerAdapter(
 
         init {
             binding.apply {
-                logoAnimationManager.playAnimation()
-//                signUpButton.setOnClickListener { signUpButton.startAnimation() }
+                signUpButton.setOnClickListener { signUpButton.startAnimation() }
 //                signUpButton.doneLoadingAnimation(
 //                    R.color.colorSurface,
 //                    BitmapFactory.decodeResource(root.context.resources, R.drawable.done_icon)
@@ -48,20 +47,20 @@ class ViewPagerAdapter(
     }
 
     override fun onViewRecycled(holder: MyViewHolder) {
-        holder.logoAnimationManager.endAnimation()
+        holder.logoAnimationManager.pauseAnimation()
     }
 
 
     override fun onViewDetachedFromWindow(holder: MyViewHolder) {
-        holder.logoAnimationManager.cancelAnimation()
+
     }
 
 
 
     override fun getItemCount(): Int = pageDataList.count()
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-
         holder.apply {
+            logoAnimationManager.playAnimation()
             binding.dataItem = pageDataList[position]
             binding.eminogoViewId.apply {
                 logoHeightSizeRatio = pageDataList[position].logoHeightRatio
