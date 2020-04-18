@@ -4,14 +4,15 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.android.stripesliderview.slider.SlideLayout
 import com.android.stripesliderview.viewpager.PageData
+import com.google.android.material.button.MaterialButton
 
 class MainActivity : AppCompatActivity() {
     lateinit var slideLayout: SlideLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val view = findViewById<SlideLayout>(R.id.SlideLayout)
-
+       slideLayout = findViewById<SlideLayout>(R.id.SlideLayout)
+        val view = findViewById<MaterialButton>(R.id.skip_button)
         val listPage = listOf(
             PageData(
                 "DO SOMETHING",
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        view.viewPagerAdapter.addPages(listPage)
+        slideLayout.viewPagerAdapter.addPages(listPage)
+        view.setOnClickListener {  slideLayout.showSkipTapTarget(this) }
     }
 }

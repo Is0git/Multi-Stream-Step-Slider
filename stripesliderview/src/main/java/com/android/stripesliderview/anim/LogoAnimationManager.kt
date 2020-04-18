@@ -39,7 +39,7 @@ class LogoAnimationManager(animatedView: EminogoView, isSequential: Boolean) :
 
 
         val linesAnimator =
-            AnimatorBuilder().addDuration(3000).addInterpolator(LinearInterpolator()).setRepeatCount(ValueAnimator.INFINITE)
+            AnimatorBuilder().addDuration(4000).addInterpolator(LinearInterpolator()).setRepeatCount(ValueAnimator.INFINITE)
                 .build(propertyValues["linesX"]!!, propertyValues["linesY"]!!) {
                     animatedView.apply {
                         this.linesX = it.getAnimatedValue("linesX") as Float

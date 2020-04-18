@@ -1,18 +1,25 @@
 package com.android.stripesliderview.slider
 
-import android.animation.AnimatorSet
+import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.Typeface
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.widget.TextViewCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.android.stripesliderview.R
 import com.android.stripesliderview.viewpager.ViewPagerAdapter
+import com.getkeepsafe.taptargetview.TapTarget
+import com.getkeepsafe.taptargetview.TapTargetView
 import com.google.android.material.button.MaterialButton
+
 
 class SlideLayout : ConstraintLayout {
     lateinit var sliderBackgroundView: SliderBackgroundView
@@ -20,8 +27,8 @@ class SlideLayout : ConstraintLayout {
     lateinit var indicator: SliderIndicator
     lateinit var viewPager: ViewPager2
     lateinit var viewPagerAdapter: ViewPagerAdapter
+    lateinit var skipButton: MaterialButton
 
-    var animatorSet: AnimatorSet? = null
 
     var itemsCount = 0
 
@@ -81,10 +88,11 @@ class SlideLayout : ConstraintLayout {
                     setCurrentItem(currentItem + 1, true)
                 }
             }
+            textAlignment = TextView.TEXT_ALIGNMENT_CENTER
         }
 
         viewPager = ViewPager2(context).apply {
-            id = R.id.viewPagerView
+            id = R.id.view_pager_view
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageScrollStateChanged(state: Int) {
 
@@ -114,6 +122,13 @@ class SlideLayout : ConstraintLayout {
         }
 
 
+        skipButton = MaterialButton(context, null, R.attr.borderlessButtonStyle).apply {
+            TextViewCompat.setTextAppearance(this, R.style.TextAppearance_MaterialComponents_Body1)
+            text = context.getString(R.string.skip)
+            this.setTypeface(typeface, Typeface.BOLD)
+            id = R.id.skip_button
+        }
+
         this.setConstraintSet(ConstraintSet().apply {
             clone(
                 context,
@@ -122,18 +137,39 @@ class SlideLayout : ConstraintLayout {
         })
 
         addView(sliderBackgroundView)
-
         addView(indicator)
-
-        addView(nextButton)
-
         addView(viewPager)
-
-        animatorSet = AnimatorSet()
+        addView(skipButton)
+        addView(nextButton)
 
     }
 
+    fun showSkipTapTarget(activity: Activity) {
+        TapTargetView.showFor(activity,  // `this` is an Activity
+            TapTarget.forView(
+                nextButton,
+                "Welcome!",
+                "We highly recommend to connect your stream accounts in order to get enjoy all the features and have your data synchronized"
+            ) // All options below are optional
+                .outerCircleAlpha(0.96f) // Specify the alpha amount for the outer circle
+                .titleTextSize(20) // Specify the size (in sp) of the title text
+                .descriptionTextSize(18)
+                .outerCircleColor(R.color.colorPrimary)
+                .titleTextColor(R.color.colorOnSurface) // Specify the color of the title text
+                .descriptionTextSize(10) // Specify the size (in sp) of the description text
+                .descriptionTextColor(R.color.colorOnSurface) // Specify the color of the description text
+                .textColor(R.color.colorOnSurface) // Specify a color for both the title and description text
+                .transparentTarget(true)
+                .textTypeface(Typeface.SANS_SERIF) // Specify a typeface for the text
+                .targetRadius(60),  // Specify the target radius (in dp)
+            object : TapTargetView.Listener() {
+                // The listener can listen for regular clicks, long clicks or cancels
+                override fun onTargetClick(view: TapTargetView) {
+                    super.onTargetClick(view) // This call is optional
 
+                }
+            })
+    }
 }
 
 fun dpToPx(dp: Float, resources: Resources) = (dp / resources.displayMetrics.density).toInt()
