@@ -170,6 +170,10 @@ class SlideLayout : ConstraintLayout {
                 }
             })
     }
+
+    fun onSkipButtonClick(onClick: (view: View) -> Unit) {
+       skipButton.setOnClickListener { onClick(it) }
+    }
 }
 
 fun dpToPx(dp: Float, resources: Resources) = (dp / resources.displayMetrics.density).toInt()
