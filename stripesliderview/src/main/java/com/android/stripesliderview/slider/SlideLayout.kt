@@ -15,6 +15,8 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.TextViewCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.android.stripesliderview.R
+import com.android.stripesliderview.listeners.OnProgressButtonListener
+import com.android.stripesliderview.viewpager.PageData
 import com.android.stripesliderview.viewpager.ViewPagerAdapter
 import com.getkeepsafe.taptargetview.TapTarget
 import com.getkeepsafe.taptargetview.TapTargetView
@@ -173,6 +175,18 @@ class SlideLayout : ConstraintLayout {
 
     fun onSkipButtonClick(onClick: (view: View) -> Unit) {
        skipButton.setOnClickListener { onClick(it) }
+    }
+
+    fun addPages(pageData: List<PageData>) {
+        viewPagerAdapter.addPages(pageData)
+    }
+
+    fun getCurrentPageData() : PageData {
+        return viewPagerAdapter.pageDataList[viewPager.currentItem]
+    }
+
+    fun setOnProgressButtonListener(listener: OnProgressButtonListener) {
+        viewPagerAdapter.onProgressButtonListener = listener
     }
 }
 
