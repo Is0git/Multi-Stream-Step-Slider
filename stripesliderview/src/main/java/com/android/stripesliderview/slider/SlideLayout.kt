@@ -14,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.TextViewCompat
 import androidx.viewpager2.widget.ViewPager2
+import br.com.simplepass.loadingbutton.customViews.CircularProgressButton
 import com.android.stripesliderview.R
 import com.android.stripesliderview.listeners.OnProgressButtonListener
 import com.android.stripesliderview.viewpager.PageData
@@ -21,6 +22,7 @@ import com.android.stripesliderview.viewpager.ViewPagerAdapter
 import com.getkeepsafe.taptargetview.TapTarget
 import com.getkeepsafe.taptargetview.TapTargetView
 import com.google.android.material.button.MaterialButton
+import java.util.*
 
 
 class SlideLayout : ConstraintLayout {
@@ -113,8 +115,17 @@ class SlideLayout : ConstraintLayout {
 
                 }
             })
-            viewPagerAdapter = ViewPagerAdapter(itemsCount)
-                .also { adapter = it }
+            viewPagerAdapter = ViewPagerAdapter(itemsCount).also { it ->
+                adapter = it
+                it.onProgressButtonListener = object : OnProgressButtonListener {
+                    override fun onClick(view: CircularProgressButton) {
+                        viewPager.currentItem.also { position ->
+                            getPage(position).onSyncClick?.invoke()
+                        }
+                    }
+
+                }
+            }
             setPageTransformer { page, position ->
                 Log.d("TEST", position.toString())
                 page.scaleY = 1 - (0.90f * kotlin.math.abs(position))
@@ -174,19 +185,28 @@ class SlideLayout : ConstraintLayout {
     }
 
     fun onSkipButtonClick(onClick: (view: View) -> Unit) {
-       skipButton.setOnClickListener { onClick(it) }
+        skipButton.setOnClickListener { onClick(it) }
     }
 
     fun addPages(pageData: List<PageData>) {
         viewPagerAdapter.addPages(pageData)
     }
 
-    fun getCurrentPageData() : PageData {
+    fun getCurrentPageData(): PageData {
         return viewPagerAdapter.pageDataList[viewPager.currentItem]
     }
 
-    fun setOnProgressButtonListener(listener: OnProgressButtonListener) {
+    fun getPage(position: Int): PageData {
+        return viewPagerAdapter.pageDataList[position]
+    }
+
+    private fun setOnProgressButtonListener(listener: OnProgressButtonListener) {
         viewPagerAdapter.onProgressButtonListener = listener
+    }
+
+
+    fun notifyItemChanged(position: Int) {
+        viewPagerAdapter.notifyItemChanged(position)
     }
 }
 

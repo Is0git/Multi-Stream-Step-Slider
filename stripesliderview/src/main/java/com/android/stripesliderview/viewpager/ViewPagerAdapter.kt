@@ -2,6 +2,7 @@ package com.android.stripesliderview.viewpager
 
 import android.animation.AnimatorSet
 import android.graphics.BitmapFactory
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +13,7 @@ import com.android.stripesliderview.anim.LogoAnimationManager
 import com.android.stripesliderview.databinding.PlaceHolderBinding
 import com.android.stripesliderview.listeners.OnProgressButtonListener
 import com.google.android.material.textview.MaterialTextView
+import kotlinx.android.synthetic.main.place_holder.view.*
 
 class ViewPagerAdapter(
     private var itemsCount: Int = 3,
@@ -62,12 +64,26 @@ class ViewPagerAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.apply {
             logoAnimationManager.playAnimation()
-            binding.dataItem = pageDataList[position]
+
+            val item = pageDataList[position]
+            binding.dataItem = item
             binding.eminogoViewId.apply {
                 logoHeightSizeRatio = pageDataList[position].logoHeightRatio
                 logoWidthSizeRatio = pageDataList[position].logoWidthRatio
                 logoOffsetRatio = pageDataList[position].logoOffSetRatio
             }
+            when(item.state) {
+                PageData.ProgressButtonState.COMPLETED ->  binding.signUpButton.doneLoadingAnimation(
+                    R.color.colorSurface,
+                    BitmapFactory.decodeResource(binding.root.context.resources, R.drawable.done_icon)
+                )
+                PageData.ProgressButtonState.FAILED -> binding.signUpButton.doneLoadingAnimation(
+                    R.color.colorSurface,
+                    BitmapFactory.decodeResource(binding.root.context.resources, R.drawable.icon_failed)
+                )
+                else -> Log.e("state", "IDLE")
+            }
+
         }
     }
 }

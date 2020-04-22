@@ -8,43 +8,46 @@ import com.android.stripesliderview.slider.SlideLayout
 import com.android.stripesliderview.viewpager.PageData
 import com.google.android.material.button.MaterialButton
 
-class MainActivity : AppCompatActivity(), OnProgressButtonListener{
+class MainActivity : AppCompatActivity() {
     lateinit var slideLayout: SlideLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        slideLayout = findViewById(R.id.SlideLayout)
 
-       slideLayout = findViewById(R.id.SlideLayout)
-        slideLayout.setOnProgressButtonListener(this)
+
         val view = findViewById<MaterialButton>(R.id.skip_button)
-        val listPage = listOf(
-            PageData(
-                "DO SOMETHING",
-                "HELLO",
-                R.drawable.ic_twitch_logo,
-                R.drawable.ic_circle,
-                R.drawable.ic_lines,
-                1f,
-                0.70f,
-                0.50f
-            ) {Log.d("CLICK", "TWTITCH CLICK")},
-            PageData(
-                "DO SOMETHING",
-                "HELLO",
-                R.drawable.ic_mixer_logo,
-                R.drawable.ic_circle,
-                R.drawable.ic_lines,
-                0.80f,
-                0.30f,
-                0.90f
-            ) {Log.d("CLICK", "MIXER CLICK")}
-        )
+        val pageOne = PageData.Builder()
+            .setPageButtonText("SIGN IN")
+            .setTitleText("TWITCH")
+            .setLogoDrawableId(R.drawable.ic_twitch_logo)
+            .setCircleDrawableId(R.drawable.ic_circle)
+            .setUnderCircleDrawableId(R.drawable.ic_lines)
+            .setLogoWidthRatio(1f)
+            .setHeightRatio(0.70f)
+            .setLogoOffSetRatio(0.50f)
+            .setOnSyncButtonClickListener { Log.d("AUTH", "TWITCH CLICK") }
+            .build()
 
-        slideLayout.viewPagerAdapter.addPages(listPage)
-        view.setOnClickListener {  slideLayout.showSkipTapTarget(this) }
+        val pageTwo = PageData.Builder()
+            .setPageButtonText("SIGN IN")
+            .setTitleText("MIXER")
+            .setLogoDrawableId(R.drawable.ic_twitch_logo)
+            .setCircleDrawableId(R.drawable.ic_circle)
+            .setUnderCircleDrawableId(R.drawable.ic_lines)
+            .setLogoWidthRatio(0.80f)
+            .setHeightRatio(0.30f)
+            .setLogoOffSetRatio(0.90f)
+            .setOnSyncButtonClickListener { Log.d("AUTH", "MIXER CLICK") }
+            .build()
+
+        val pageList = listOf(pageOne, pageTwo)
+        slideLayout.viewPagerAdapter.addPages(pageList)
+        slideLayout.getPage(0).state = PageData.ProgressButtonState.COMPLETED
+        slideLayout.notifyItemChanged(0)
+
+
+        view.setOnClickListener { slideLayout.showSkipTapTarget(this) }
     }
 
-    override fun onClick(view: br.com.simplepass.loadingbutton.customViews.CircularProgressButton) {
-        slideLayout.getCurrentPageData().onSyncClick()
-    }
 }
