@@ -76,6 +76,11 @@ data class PageData(
             return this
         }
 
+        fun setState(state: PageData.ProgressButtonState) : Builder {
+            this.state = state
+            return this
+        }
+
         fun build(): PageData {
            return PageData(
                 pageButtonText ?: throw NullPointerException("page button text must be set"),

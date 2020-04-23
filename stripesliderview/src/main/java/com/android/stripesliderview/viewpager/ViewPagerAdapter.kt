@@ -81,6 +81,7 @@ class ViewPagerAdapter(
                     R.color.colorSurface,
                     BitmapFactory.decodeResource(binding.root.context.resources, R.drawable.icon_failed)
                 )
+                PageData.ProgressButtonState.STARTED -> binding.signUpButton.startAnimation()
                 else -> Log.e("state", "IDLE")
             }
 

@@ -197,7 +197,7 @@ class SlideLayout : ConstraintLayout {
     }
 
     fun getPage(position: Int): PageData {
-        return viewPagerAdapter.pageDataList[position]
+       return viewPagerAdapter.pageDataList[position]
     }
 
     private fun setOnProgressButtonListener(listener: OnProgressButtonListener) {

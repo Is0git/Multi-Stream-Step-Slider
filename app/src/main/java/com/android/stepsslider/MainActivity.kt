@@ -26,28 +26,30 @@ class MainActivity : AppCompatActivity() {
             .setLogoWidthRatio(1f)
             .setHeightRatio(0.70f)
             .setLogoOffSetRatio(0.50f)
+            .setState(PageData.ProgressButtonState.STARTED)
             .setOnSyncButtonClickListener { Log.d("AUTH", "TWITCH CLICK") }
             .build()
 
         val pageTwo = PageData.Builder()
             .setPageButtonText("SIGN IN")
             .setTitleText("MIXER")
-            .setLogoDrawableId(R.drawable.ic_twitch_logo)
+            .setLogoDrawableId(R.drawable.ic_mixer_logo)
             .setCircleDrawableId(R.drawable.ic_circle)
             .setUnderCircleDrawableId(R.drawable.ic_lines)
             .setLogoWidthRatio(0.80f)
             .setHeightRatio(0.30f)
             .setLogoOffSetRatio(0.90f)
+            .setState(PageData.ProgressButtonState.STARTED)
             .setOnSyncButtonClickListener { Log.d("AUTH", "MIXER CLICK") }
             .build()
 
         val pageList = listOf(pageOne, pageTwo)
         slideLayout.viewPagerAdapter.addPages(pageList)
-        slideLayout.getPage(0).state = PageData.ProgressButtonState.COMPLETED
-        slideLayout.notifyItemChanged(0)
 
 
-        view.setOnClickListener { slideLayout.showSkipTapTarget(this) }
+            slideLayout.onSkipButtonClick {        slideLayout.getPage(0).state = PageData.ProgressButtonState.COMPLETED
+                slideLayout.notifyItemChanged(0) }
+//        view.setOnClickListener { slideLayout.showSkipTapTarget(this) }
     }
 
 }
