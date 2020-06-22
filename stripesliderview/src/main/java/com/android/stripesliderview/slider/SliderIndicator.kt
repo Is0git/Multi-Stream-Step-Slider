@@ -11,30 +11,19 @@ import kotlin.math.absoluteValue
 class SliderIndicator : View {
 
     var indicatorsSize = 3
-
     var circleRadius = 25f
-
     val circleDiameter = circleRadius * 2
-
     val indicatorsMargin = 50f
-
     val selectedCircleRadius = 30f
-
     var selectedPosition = 1
-
-
     var animPosition = 1f
         set(value) {
             field = value
             invalidate()
         }
-
     lateinit var selectedOvalPaint: Paint
-
     val selectedCircleDiameter = selectedCircleRadius * 2
-
     lateinit var selectedIndicatorPaint: Paint
-
     lateinit var defaultCirclePaint: Paint
 
     constructor(context: Context?, itemsCount: Int = 0) : super(context) {
@@ -111,11 +100,8 @@ class SliderIndicator : View {
         }
         val ovalLength = indicatorsMargin + circleDiameter
         val gap = (indicatorsMargin + circleDiameter) * selectedPosition
-
         val startXAnimPos: Float
-
         val startYAnimPos: Float
-
         val endYPosition: Float
 
         if (animPosition == 0f) {
