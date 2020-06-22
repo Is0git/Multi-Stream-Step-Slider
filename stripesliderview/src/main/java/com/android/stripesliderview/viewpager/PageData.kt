@@ -99,6 +99,6 @@ data class PageData(
     }
 
     enum class ProgressButtonState {
-        IDLE, STARTED, COMPLETED, FAILED
+        IDLE, STARTED, COMPLETED, FAILED, RESET
     }
 }

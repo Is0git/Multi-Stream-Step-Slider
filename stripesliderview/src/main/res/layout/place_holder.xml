@@ -47,6 +47,7 @@
             app:initialCornerAngle="40dp"
             app:spinning_bar_color="@color/colorSurface"
             android:background="@drawable/shape_default"
+            android:textStyle="bold"
             android:text="@{dataItem.pageButtonText, default = @string/sign_up}"
             app:layout_constraintEnd_toEndOf="@+id/sign_up_text"
             app:layout_constraintHorizontal_bias="0.5"

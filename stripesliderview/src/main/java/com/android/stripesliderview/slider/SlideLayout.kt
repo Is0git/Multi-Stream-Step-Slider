@@ -184,6 +184,11 @@ class SlideLayout : ConstraintLayout {
             })
     }
 
+    fun setButtonState(position: Int, state: PageData.ProgressButtonState) {
+        viewPagerAdapter.pageDataList[position].state = state
+        viewPagerAdapter.notifyDataSetChanged()
+    }
+
     fun onSkipButtonClick(onClick: (view: View) -> Unit) {
         skipButton.setOnClickListener { onClick(it) }
     }

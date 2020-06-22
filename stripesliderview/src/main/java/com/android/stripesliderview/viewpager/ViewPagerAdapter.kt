@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.simplepass.loadingbutton.customViews.CircularProgressButton
+import br.com.simplepass.loadingbutton.presentation.State
 import com.android.eminogoview.EminogoView
 import com.android.stripesliderview.R
 import com.android.stripesliderview.anim.LogoAnimationManager
@@ -24,15 +25,13 @@ class ViewPagerAdapter(
 
     class MyViewHolder(val binding: PlaceHolderBinding, listener: OnProgressButtonListener?) : RecyclerView.ViewHolder(binding.root) {
         var logoAnimationManager = LogoAnimationManager(binding.eminogoViewId, true)
+
         init {
             binding.signUpButton.apply {
                 setOnClickListener {
                     this.startAnimation()
-                    listener?.onClick(this)}
-//                doneLoadingAnimation(
-//                    R.color.colorSurface,
-//                    BitmapFactory.decodeResource(context.resources, R.drawable.done_icon)
-//                )
+                    postDelayed({ listener?.onClick(this) }, 750)
+                }
             }
         }
     }
@@ -72,18 +71,26 @@ class ViewPagerAdapter(
                 logoWidthSizeRatio = pageDataList[position].logoWidthRatio
                 logoOffsetRatio = pageDataList[position].logoOffSetRatio
             }
-            when(item.state) {
-                PageData.ProgressButtonState.COMPLETED ->  binding.signUpButton.doneLoadingAnimation(
-                    R.color.colorSurface,
-                    BitmapFactory.decodeResource(binding.root.context.resources, R.drawable.done_icon)
-                )
-                PageData.ProgressButtonState.FAILED -> binding.signUpButton.doneLoadingAnimation(
-                    R.color.colorSurface,
-                    BitmapFactory.decodeResource(binding.root.context.resources, R.drawable.icon_failed)
-                )
-                PageData.ProgressButtonState.STARTED -> binding.signUpButton.startAnimation()
-                else -> Log.e("state", "IDLE")
-            }
+          binding.signUpButton.apply {
+              when(item.state) {
+                  PageData.ProgressButtonState.COMPLETED ->  if (this.getState() == State.MORPHING || getState() == State.PROGRESS) {
+                      doneLoadingAnimation(
+                          R.color.colorSurface,
+                          BitmapFactory.decodeResource(binding.root.context.resources, R.drawable.done_icon)
+                      )
+                  }
+                  PageData.ProgressButtonState.FAILED -> if (this.getState() == State.MORPHING || getState() == State.PROGRESS) {
+                      doneLoadingAnimation(
+                          R.color.colorSurface,
+                          BitmapFactory.decodeResource(binding.root.context.resources, R.drawable.icon_failed)
+                      )
+                  }
+                  PageData.ProgressButtonState.STARTED -> startAnimation()
+
+                  PageData.ProgressButtonState.RESET -> startMorphRevertAnimation()
+                  else -> Log.e("state", "IDLE")
+              }
+          }
 
         }
     }
