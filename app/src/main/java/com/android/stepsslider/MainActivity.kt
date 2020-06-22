@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
             .build()
 
         val pageTwo = PageData.Builder()
-            .setPageButtonText("SIGN IN")
+            .setPageButtonText("SIGN IN")-
             .setTitleText("MIXER")
             .setLogoDrawableId(R.drawable.ic_mixer_logo)
             .setCircleDrawableId(R.drawable.ic_circle)
